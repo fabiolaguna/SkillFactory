@@ -3,7 +3,6 @@ public abstract class Specie {
     private double speed;
 
     public Specie(){
-        this.speed = speed;
     }
 
     public double getSpeed() {
