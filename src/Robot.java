@@ -1,4 +1,4 @@
-public class Robot extends Specie {
+public class Robot extends Specie implements ISprintable {
 
     private static double robotMaxSpeed = 60;
     private static double robotMinSpeed = 30;
@@ -6,5 +6,10 @@ public class Robot extends Specie {
     public Robot(){
         double speed = Math.random()*(robotMaxSpeed-robotMinSpeed) + robotMinSpeed;
         setSpeed(speed);
+    }
+
+    @Override
+    public double run(double distance) {
+        return (distance/getSpeed());
     }
 }
