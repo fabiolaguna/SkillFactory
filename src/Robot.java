@@ -10,6 +10,11 @@ public class Robot extends Specie implements ISprintable {
     }
 
     @Override
+    public String getSpecie() {
+        return "Robot";
+    }
+
+    @Override
     public double run(double distance) {
         return (distance/getSpeed());
     }

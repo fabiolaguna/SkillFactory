@@ -15,8 +15,10 @@ public abstract class Specie {
         this.speed = speed;
     }
 
+    abstract public String getSpecie();
+
     @Override
     public String toString() {
-        return "NAME: " + name + "  ||  SPEED: " + speed + "  ||  ";
+        return "NAME: " + name + "\nSPEED: " + String.format("%.1f", speed) + " km/h\n";
     }
 }

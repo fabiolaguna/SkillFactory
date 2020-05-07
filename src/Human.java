@@ -10,6 +10,11 @@ public class Human extends Specie implements ISprintable {
     }
 
     @Override
+    public String getSpecie() {
+        return "Human";
+    }
+
+    @Override
     public double run(double distance) {
         return (distance/getSpeed());
     }
