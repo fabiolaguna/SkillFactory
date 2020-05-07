@@ -4,12 +4,12 @@ public class Main {
 
         Marathon marathon = new Marathon();
 
-        Specie dog1 = new Dog("Firulais");
-        Specie dog2 = new Dog("Fluffy");
-        Specie human2 = new Human("Eduardo");
-        Specie human3 = new Human("Alejandro");
-        Specie robot1 = new Robot("Bender");
-        Specie robot2 = new Robot("Robocop");
+        Dog dog1 = new Dog("Firulais");
+        Dog dog2 = new Dog("Fluffy");
+        Human human2 = new Human("Eduardo");
+        Human human3 = new Human("Alejandro");
+        Robot robot1 = new Robot("Bender");
+        Robot robot2 = new Robot("Robocop");
 
         marathon.addRunner(dog1);
         marathon.addRunner(dog2);
