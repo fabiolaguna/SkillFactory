@@ -3,7 +3,8 @@ public class Human extends Specie implements ISprintable {
     private static double humanMaxSpeed = 40;
     private static double humanMinSpeed = 15;
 
-    public Human(){
+    public Human(String name){
+        super(name);
         double speed = Math.random()*(humanMaxSpeed-humanMinSpeed) + humanMinSpeed;
         setSpeed(speed);
     }

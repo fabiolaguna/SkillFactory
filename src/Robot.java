@@ -3,7 +3,8 @@ public class Robot extends Specie implements ISprintable {
     private static double robotMaxSpeed = 60;
     private static double robotMinSpeed = 30;
 
-    public Robot(){
+    public Robot(String name){
+        super(name);
         double speed = Math.random()*(robotMaxSpeed-robotMinSpeed) + robotMinSpeed;
         setSpeed(speed);
     }
