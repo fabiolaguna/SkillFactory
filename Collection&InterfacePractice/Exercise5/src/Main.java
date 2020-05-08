@@ -20,10 +20,9 @@ public class Main {
         cars.add(car4);
         cars.add(car5);
 
-        cars = cars.stream().distinct().collect(Collectors.toList());
+        cars.stream()
+                .distinct()
+                .forEach(System.out::println);
 
-        for (Car c : cars) {
-            System.out.println(c.toString());
-        }
     }
 }
