@@ -2,7 +2,7 @@ package net.skillfactory;
 
 import java.util.LinkedList;
 
-public class Stack<T> {
+public class Stack<T extends Comparable> {
 
     private LinkedList<T> list;
 
@@ -36,5 +36,26 @@ public class Stack<T> {
         }
 
         return top;
+    }
+
+    public T getMax(){
+
+        T max = this.getTop();
+        for(T t : list){
+            if(max.compareTo(t) < 0)
+                max = t;
+        }
+
+        return max;
+    }
+    public T getMin(){
+
+        T min = this.getTop();
+        for(T t : list){
+            if(min.compareTo(t) > 0)
+                min = t;
+        }
+
+        return min;
     }
 }

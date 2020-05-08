@@ -22,6 +22,9 @@ public class App {
         stack.push(43);
         stack.push(7);
 
+        System.out.println("Valor maximo: " + stack.getMax() + "\n");
+        System.out.println("Valor minimo: " + stack.getMin() + "\n");
+
         System.out.println("Stack size: " + stack.size());
 
         Integer removed = stack.pop();
