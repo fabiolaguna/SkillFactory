@@ -56,4 +56,26 @@ public class StringManagement {
 
         return result;
     }
+
+    public String reorderWords(String words){
+
+        StringBuilder sb = new StringBuilder(words);
+        String reorderedWord = "";
+        int endSubstring = sb.length();
+        int i = sb.length() - 1;
+
+        while (i>=0){
+
+            if (sb.charAt(i) == ' ') {
+                reorderedWord += sb.substring(i+1, endSubstring) + " ";
+                endSubstring = i;
+            } else if (i==0){
+                reorderedWord += sb.substring(i, endSubstring);
+            }
+
+            i--;
+        }
+
+        return reorderedWord;
+    }
 }
