@@ -42,20 +42,12 @@ public class StringManagement {
         for (int i=0 ; i < sb.length() ; i++){
 
             char romanNumberChar = sb.charAt(i);
-            char previousRomanNumberChar = 0;
-            boolean previousRomanNumberCharExist = false;
+            if (i>0){
 
-            if (i>0) {
-                previousRomanNumberCharExist = true;
-                previousRomanNumberChar = sb.charAt(i-1);
-            }
-
-            if (previousRomanNumberCharExist){
-
-                if (romanNumbers.get(romanNumberChar) <= romanNumbers.get(previousRomanNumberChar)){
+                if (romanNumbers.get(romanNumberChar) <= romanNumbers.get(sb.charAt(i-1))){
                     result += romanNumbers.get(romanNumberChar);
                 } else {
-                    result += romanNumbers.get(romanNumberChar) - (romanNumbers.get(previousRomanNumberChar) * 2);
+                    result += romanNumbers.get(romanNumberChar) - (romanNumbers.get(sb.charAt(i-1)) * 2);
                 }
             } else {
                 result += romanNumbers.get(romanNumberChar);
