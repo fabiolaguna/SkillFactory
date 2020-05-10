@@ -11,5 +11,8 @@ public class App {
         } else {
             System.out.println("El string no es palindromo\n");
         }
+
+        String romanNumber = "VLXCIID";
+        System.out.println("Numero romano: " + romanNumber + "  -  Decimal: " + sm.romanNumbersToInteger(romanNumber));
     }
 }
