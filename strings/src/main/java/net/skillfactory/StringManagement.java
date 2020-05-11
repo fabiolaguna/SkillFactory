@@ -2,6 +2,7 @@ package net.skillfactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class StringManagement {
 
@@ -77,5 +78,28 @@ public class StringManagement {
         }
 
         return reorderedWord;
+    }
+
+    public void printCharactersCount(String words){
+
+        StringBuilder sb = new StringBuilder(words);
+        int spaceCount = 0;
+        int numberCount = 0;
+        int letterCount = 0;
+
+        for (int i=0 ; i<sb.length() ; i++){
+
+            if (Character.isWhitespace(sb.charAt(i))){
+                spaceCount++;
+            }
+            if (Character.isLetter(sb.charAt(i))){
+                letterCount++;
+            }
+            if (Character.isDigit(sb.charAt(i))){
+                numberCount++;
+            }
+        }
+
+        System.out.println("Digitos: " + numberCount + ". Letras: " + letterCount + ". Espacios: " + spaceCount + "\n");
     }
 }
