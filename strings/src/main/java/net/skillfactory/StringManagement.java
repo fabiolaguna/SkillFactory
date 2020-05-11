@@ -6,10 +6,10 @@ import java.util.regex.Pattern;
 
 public class StringManagement {
 
-    private Map<Character,Integer> romanNumbers;
+
 
     public StringManagement(){
-        romanNumbers = new HashMap<>();
+
     }
 
     public boolean palindromo(String word){
@@ -31,6 +31,8 @@ public class StringManagement {
         romanNumber.toUpperCase();
         StringBuilder sb = new StringBuilder(romanNumber);
         int result = 0;
+
+        Map<Character,Integer> romanNumbers = new HashMap<>();;
 
         romanNumbers.put('I', 1);
         romanNumbers.put('V', 5);
