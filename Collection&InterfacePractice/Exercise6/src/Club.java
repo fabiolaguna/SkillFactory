@@ -1,8 +1,12 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class Club {
@@ -42,9 +46,9 @@ public class Club {
     }
 
 
-    public String lastBallotResults(){
+    public Map<UUID,Integer> lastBallotResults(){
 
-        String results = "";
+        Map<UUID,Integer> lastVotes = new HashMap<>();
         int votesAmount;
 
         for (int i=0 ; i<members.size() ; i++){
@@ -56,20 +60,17 @@ public class Club {
                 }
             }
 
-            results += "Member id: " + members.get(i).getId() + "\nName: " + members.get(i).getName() + "\nVotes: " + votesAmount + "\n\n";
+            lastVotes.put(members.get(i).getId(), votesAmount);
         }
 
-        return results;
+        return lastVotes;
     }
 
     public String lastBallotVotesList(){
 
-        String list = "";
-        for (Vote v : votes){
-            list += v.toString() + "\n";
-        }
-
-        return list;
+        return votes.stream()
+                .map(Objects::toString)
+                .reduce("", (a,vote) -> a + vote + "\n");
     }
 
     public String membersList(){

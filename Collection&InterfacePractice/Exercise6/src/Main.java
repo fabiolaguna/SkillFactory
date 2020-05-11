@@ -1,3 +1,8 @@
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.UUID;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -21,7 +26,13 @@ public class Main {
         club.votation();
 
         System.out.println(club.lastBallotVotesList());
-        System.out.println(club.lastBallotResults());
+        Map<UUID,Integer> votesAmountPerMember = club.lastBallotResults();
+
+        Iterator<Map.Entry<UUID,Integer>> entries = votesAmountPerMember.entrySet().iterator();
+        while (entries.hasNext()){
+            Map.Entry<UUID,Integer> entry = entries.next();
+            System.out.println("MEMBER ID: " + entry.getKey() + "\nVOTES: " + entry.getValue().toString() + "\n\n");
+        }
 
     }
 }
