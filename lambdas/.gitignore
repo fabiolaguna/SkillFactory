@@ -2,7 +2,6 @@
 # Edit at https://www.gitignore.io/?templates=java,gradle,maven,eclipse,intellij
 
 HELP.md
-.idea/
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
