@@ -18,6 +18,17 @@ public class Main {
         BiFunction<String,String,String> strings = (word1, word2) -> word1.length()>word2.length() ? word1 : word2;
         System.out.println(strings.apply("Holanda", "Hola") + "\n");
 
-        
+        Function<String,Integer> lengthVerification = string -> verifyString(string);
+        System.out.println(lengthVerification.apply("1") + "\n");
     }
+
+    public static Integer verifyString(String s){
+
+        if (s.length()>=1){
+            return s.length();
+        } else {
+            throw new InsufficientLengthException();
+        }
+    }
+
 }
