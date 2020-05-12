@@ -6,13 +6,10 @@ import java.util.regex.Pattern;
 
 public class StringManagement {
 
-
-
     public StringManagement(){
-
     }
 
-    public boolean palindromo(String word){
+    public boolean palindrome(String word){
 
         String wordWithoutSpaces = word.replace(" ", "");
 
@@ -103,5 +100,28 @@ public class StringManagement {
         }
 
         System.out.println("Digitos: " + numberCount + ". Letras: " + letterCount + ". Espacios: " + spaceCount + "\n");
+    }
+
+    public String cesarEncryption(String word){
+
+        if (word.matches("[a-zA-Z]+")){
+            String encryption = "";
+            for (int i=0 ; i < word.length() ; i++){
+
+                int nextAscii = (int) word.charAt(i) + 1;
+
+                if (nextAscii == 123){
+                    nextAscii = 97;
+                }
+                if (nextAscii == 91){
+                    nextAscii = 65;
+                }
+
+                encryption += (char) nextAscii;
+            }
+            return encryption;
+        } else {
+            return "Can't be encrypted";
+        }
     }
 }

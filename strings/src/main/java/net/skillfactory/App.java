@@ -6,7 +6,7 @@ public class App {
 
         StringManagement sm = new StringManagement();
 
-        if (sm.palindromo("Arriba la birra")){
+        if (sm.palindrome("Arriba la birra")){
             System.out.println("El string es palindromo\n");
         } else {
             System.out.println("El string no es palindromo\n");
@@ -20,5 +20,7 @@ public class App {
         System.out.println("Reordenada: " + sm.reorderWords(word));
 
         sm.printCharactersCount("Boquita el unico grande con 18 titulos internacionales y 0 descensos");
+
+        System.out.println(sm.cesarEncryption("abcde") + "\n");
     }
 }
