@@ -22,5 +22,7 @@ public class App {
         sm.printCharactersCount("Boquita el unico grande con 18 titulos internacionales y 0 descensos");
 
         System.out.println(sm.cesarEncryption("abcde") + "\n");
+
+        System.out.println(sm.verifyString("RegEx101.com"));
     }
 }

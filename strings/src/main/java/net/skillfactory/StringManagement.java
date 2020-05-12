@@ -124,4 +124,16 @@ public class StringManagement {
             return "Can't be encrypted";
         }
     }
+
+    public boolean verifyString(String word){
+
+        if (word.matches("^(?=\\w*\\d)(?=\\w*[A-Z])(?=\\w*[a-z])\\S{8,30}$")){
+            if (word.matches("[a-zA-Z0-9_]+")){
+                if (Character.isDigit(word.charAt(0)) || Character.isLetter(word.charAt(0))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
