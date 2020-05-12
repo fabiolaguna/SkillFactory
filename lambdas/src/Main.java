@@ -1,4 +1,6 @@
 import com.sun.jmx.snmp.Timestamp;
+
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -12,5 +14,10 @@ public class Main {
         Supplier<Timestamp> supplier = () -> new Timestamp(System.currentTimeMillis());
         System.out.println(supplier.get() + "\n");
 
+        //Retorna el string mas grande
+        BiFunction<String,String,String> strings = (word1, word2) -> word1.length()>word2.length() ? word1 : word2;
+        System.out.println(strings.apply("Holanda", "Hola") + "\n");
+
+        
     }
 }
