@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 public class Main {
 
     public static void main(String[] args) {
-/*
+
         //EJERCICIO 1
         Function<Integer,Integer> function = number -> number%2;
         System.out.println(function.apply(5) + "\n");
@@ -38,17 +38,23 @@ public class Main {
         stringMap.put(6,"Messi");
         stringMap.put(3,"Hola todo bien?");
         BiConsumer<Integer,String> printMap = (key,value) -> System.out.println("KEY: " + key + verifyAndPrintMapValue(value) + "\n");
-        stringMap.forEach(printMap);*/
+        stringMap.forEach(printMap);
 
         //EJERCICIO 6
         PrintClass<Integer> classPrinter = obj -> System.out.println("Class: " + obj.getClass());
         classPrinter.getObjectClass(44);
 
         Multiplication<Double,Integer,Double> multiplication = (numb1, numb2) -> numb1 * numb2;
-        System.out.println(multiplication.mult(2.5, 12));
+        System.out.println(multiplication.getMultiplication(2.5, 12));
 
         IsolationMessage message = () -> "No salimos mas deaa";
         System.out.println(message.getMessage());
+
+        //EJERCICIO 7
+
+        classPrinter(obj -> System.out.println("Class: " + obj.getClass()), "xd");
+        System.out.println(multiplication(((num1, num2) -> num1*num2), 8.6, 4.1));
+        System.out.println(isolationMessage(() -> "Stay at home bro"));
     }
 
     public static Integer verifyString(String s){
@@ -67,6 +73,18 @@ public class Main {
         } else {
             return ("  VALUE: Value can't be printed. Not enough length");
         }
+    }
+
+    public static void classPrinter(PrintClass print, String string){
+        print.getObjectClass(string);
+    }
+
+    public static Double multiplication (Multiplication<Double,Double,Double> mult, Double num1, Double num2){
+        return mult.getMultiplication(num1, num2);
+    }
+
+    public static String isolationMessage(IsolationMessage message){
+        return message.getMessage();
     }
 
 }
