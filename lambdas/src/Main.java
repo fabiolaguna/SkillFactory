@@ -3,6 +3,7 @@ import interfaces.IsolationMessage;
 import interfaces.Multiplication;
 import interfaces.PrintClass;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -19,7 +20,7 @@ public class Main {
         System.out.println(function.apply(5) + "\n");
 
         //EJERCICIO 2
-        Supplier<Timestamp> supplier = () -> new Timestamp(System.currentTimeMillis());
+        Supplier<LocalDateTime> supplier = () -> LocalDateTime.now();
         System.out.println(supplier.get() + "\n");
 
         //EJERCICIO 3
