@@ -9,9 +9,8 @@ public class StringManagement {
 
     public static List<String> removeEvenLength(List<String> words){
 
-        return Optional.ofNullable(words)
-                .orElse(new ArrayList<>())
-                .stream()
+        words = Optional.ofNullable(words).orElse(new ArrayList<>()); //Si es null creo una lista vacia
+        return words.stream()
                 .filter(word -> word.length()%2==1)
                 .collect(Collectors.toList());
     }
