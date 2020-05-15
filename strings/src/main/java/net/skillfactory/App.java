@@ -4,25 +4,27 @@ public class App {
 
     public static void main( String[] args ) {
 
-        StringManagement sm = new StringManagement();
-
-        if (sm.palindrome("Arriba la birra")){
+        if (StringManagement.palindrome("Arriba la birra")){
             System.out.println("El string es palindromo\n");
         } else {
             System.out.println("El string no es palindromo\n");
         }
 
-        String romanNumber = "VLXCIID";
-        System.out.println("Numero romano: " + romanNumber + "  -  Decimal: " + sm.romanNumbersToInteger(romanNumber));
+        String romanNumber = "VLXCZID";
+        System.out.println("Numero romano: " + romanNumber + "  -  Decimal: " + StringManagement.romanNumbersToInteger(romanNumber));
 
         String word = "Arriba la Birra";
         System.out.println(word);
-        System.out.println("Reordenada: " + sm.reorderWords(word));
+        System.out.println("Reordenada: " + StringManagement.reorderWords(word));
 
-        sm.printCharactersCount("Boquita el unico grande con 18 titulos internacionales y 0 descensos");
+        StringManagement.printCharactersCount("Boquita el unico grande con 18 titulos internacionales y 0 descensos");
 
-        System.out.println(sm.cesarEncryption("abcde") + "\n");
+        try {
+            System.out.println(StringManagement.cesarEncryption("abc,de") + "\n");
+        } catch (InvalidStringToCesarEncryption invalidStringToCesarEncryption) {
+            invalidStringToCesarEncryption.printStackTrace();
+        }
 
-        System.out.println(sm.verifyString("RegEx101.com"));
+        System.out.println(StringManagement.verifyString("RegEx101.com"));
     }
 }

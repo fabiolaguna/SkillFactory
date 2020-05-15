@@ -2,28 +2,23 @@ package net.skillfactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 public class StringManagement {
 
-    public StringManagement(){
-    }
-
-    public boolean palindrome(String word){
+    public static boolean palindrome(String word){
 
         String wordWithoutSpaces = word.replace(" ", "");
 
         StringBuilder stringBuilder = new StringBuilder(wordWithoutSpaces);
         stringBuilder = stringBuilder.reverse();
 
-        if (wordWithoutSpaces.equalsIgnoreCase((stringBuilder.toString()))){
-            return true;
-        } else {
-            return false;
-        }
+        return wordWithoutSpaces.equalsIgnoreCase((stringBuilder.toString()));
     }
 
-    public int romanNumbersToInteger(String romanNumber){
+    public static int romanNumbersToInteger(String romanNumber){
 
         romanNumber.toUpperCase();
         StringBuilder sb = new StringBuilder(romanNumber);
@@ -41,23 +36,31 @@ public class StringManagement {
 
         for (int i=0 ; i < sb.length() ; i++){
 
-            char romanNumberChar = sb.charAt(i);
+            Integer romanNumberDecimal = convertRomanNumberToDecimal(romanNumbers, sb.charAt(i));
             if (i>0){
 
-                if (romanNumbers.get(romanNumberChar) <= romanNumbers.get(sb.charAt(i-1))){
-                    result += romanNumbers.get(romanNumberChar);
+                if (romanNumberDecimal <= romanNumbers.get(sb.charAt(i-1))){
+                    result += romanNumberDecimal;
                 } else {
-                    result += romanNumbers.get(romanNumberChar) - (romanNumbers.get(sb.charAt(i-1)) * 2);
+                    result += romanNumberDecimal - (romanNumbers.get(sb.charAt(i-1)) * 2);
                 }
             } else {
-                result += romanNumbers.get(romanNumberChar);
+                result += romanNumberDecimal;
             }
         }
 
         return result;
     }
 
-    public String reorderWords(String words){
+    private static Integer convertRomanNumberToDecimal(Map<Character,Integer> romanNumbers, Character romanNumber) throws IncorrectRomanNumberException {
+
+        return Optional.ofNullable(romanNumber)
+                .filter(number -> romanNumbers.containsKey(romanNumber))
+                .map(number -> romanNumbers.get(number))
+                .orElseThrow(IncorrectRomanNumberException::new);
+    }
+
+    public static String reorderWords(String words){
 
         StringBuilder sb = new StringBuilder(words);
         String reorderedWord = "";
@@ -79,7 +82,7 @@ public class StringManagement {
         return reorderedWord;
     }
 
-    public void printCharactersCount(String words){
+    public static void printCharactersCount(String words){
 
         StringBuilder sb = new StringBuilder(words);
         int spaceCount = 0;
@@ -99,10 +102,10 @@ public class StringManagement {
             }
         }
 
-        System.out.println("Digitos: " + numberCount + ". Letras: " + letterCount + ". Espacios: " + spaceCount + "\n");
+        System.out.println(String.format("Digitos: %s. Letras: %s. Espacios: %s",numberCount,letterCount,spaceCount));
     }
 
-    public String cesarEncryption(String word){
+    public static String cesarEncryption(String word) throws InvalidStringToCesarEncryption {
 
         if (word.matches("[a-zA-Z]+")){
             String encryption = "";
@@ -121,11 +124,11 @@ public class StringManagement {
             }
             return encryption;
         } else {
-            return "Can't be encrypted";
+            throw new InvalidStringToCesarEncryption();
         }
     }
 
-    public boolean verifyString(String word){
+    public static boolean verifyString(String word){
 
         if (word.matches("^(?=\\w*\\d)(?=\\w*[A-Z])(?=\\w*[a-z])\\S{8,30}$")){
             if (word.matches("[a-zA-Z0-9_]+")){
