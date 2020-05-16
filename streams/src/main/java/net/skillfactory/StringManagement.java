@@ -3,9 +3,8 @@ package net.skillfactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StringManagement {
 
@@ -61,5 +60,19 @@ public class StringManagement {
             c = 96;
         }
         return (char) (c+1);
+    }
+
+    public static String reorderWords(String words){
+
+        Optional.ofNullable(words).orElseThrow(NullStringException::new);
+
+        StringBuilder sb = new StringBuilder(words);
+        StringBuilder sbFinal = new StringBuilder();
+
+        sbFinal.append(Stream.of(sb.reverse().toString().split(" "))
+                .map(word -> new StringBuilder(word).reverse())
+                .collect(Collectors.joining(" ")));
+
+        return sbFinal.toString();
     }
 }

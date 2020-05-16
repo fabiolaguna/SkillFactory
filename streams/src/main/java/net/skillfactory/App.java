@@ -14,5 +14,7 @@ public class App {
         StringManagement.printCharactersCount("Soy Independiente, aunque no gano la libertadores desde 1985, sigo siendo el máximo campeón con 7 copas");
 
         System.out.println(StringManagement.cesarEncryption("zfgZBnV"));
+
+        System.out.println(StringManagement.reorderWords("Arriba la Birra"));
     }
 }
