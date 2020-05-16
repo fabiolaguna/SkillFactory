@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class StringManagement {
@@ -34,5 +35,31 @@ public class StringManagement {
                 .count();
 
         System.out.println(String.format("Digitos: %d. Letras: %d. Espacios: %d",numberCount,letterCount,spaceCount));
+    }
+
+    public static String cesarEncryption(String words){
+
+        Optional.ofNullable(words).orElseThrow(NullStringException::new);
+        StringBuilder sb = new StringBuilder();
+
+        if (words.matches("[a-zA-Z]+")){
+
+            words.chars()
+                    .forEach(caracter -> sb.append(nextCharacter((char)caracter)));
+
+            return sb.toString();
+        } else {
+            throw new InvalidStringToCesarEncryption();
+        }
+    }
+
+    private static char nextCharacter(char c){
+
+        if (c == 90){
+            c = 64;
+        } else if (c == 122){
+            c = 96;
+        }
+        return (char) (c+1);
     }
 }
