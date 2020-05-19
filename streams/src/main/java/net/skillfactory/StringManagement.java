@@ -22,27 +22,35 @@ public class StringManagement {
 
         Optional.ofNullable(words).orElseThrow(NullStringException::new);
 
-        Map<CharacterType, Long> characters = words.chars()
+        Map<String, Long> characters = words.chars()
                 .mapToObj(chr -> (char)chr)
-                .filter(character -> Character.isLetter(character) || Character.isDigit(character) || Character.isWhitespace(character))
-                .collect(Collectors.groupingBy(CharacterType::getType, Collectors.counting()));
+                .map(CharacterType::getType)
+                .filter(type -> type != CharacterType.NotInteresting)
+                .collect(Collectors.groupingBy(CharacterType::getName, Collectors.counting()));
 
-        System.out.println(String.format("Digitos: %d. Letras: %d. Espacios: %d", characters.get(CharacterType.Digit),
-                characters.get(CharacterType.Letter), characters.get(CharacterType.Whitespace)));
+        System.out.println(String.format("Digitos: %d. Letras: %d. Espacios: %d", characters.get("Digit"),
+                characters.get("Letter"), characters.get("Whitespace")));
     }
 
     private enum CharacterType {
-        Digit, Whitespace, Letter;
+        Digit, Whitespace, Letter, NotInteresting;
 
         private static CharacterType getType(char character){
 
             if (Character.isDigit(character)){
                 return Digit;
-            } else if (Character.isLetter(character)){
+            }
+            if (Character.isLetter(character)){
                 return Letter;
-            } else {
+            }
+            if(Character.isWhitespace(character)){
                 return Whitespace;
             }
+            return NotInteresting;
+        }
+
+        private static String getName(CharacterType ct) {
+            return ct.toString();
         }
     }
 
