@@ -19,11 +19,11 @@ public class BankAccount {
         balance = 500000D;
     }
 
-    public void deposit(Double money){
+    public synchronized void deposit(Double money){
         balance += money;
     }
 
-    public void withdraw(Double money) throws InsufficientFundsException {
+    public synchronized void withdraw(Double money) throws InsufficientFundsException {
 
         if (money <= balance) {
             balance -= money;
