@@ -10,8 +10,20 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public Double getBalance() {
+    public synchronized Double getBalance() {
         return balance;
+    }
+
+    public synchronized String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public synchronized void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public synchronized void setBalance(Double balance) {
+        this.balance = balance;
     }
 
     public BankAccount(String accountNumber){
@@ -20,13 +32,13 @@ public class BankAccount {
     }
 
     public synchronized void deposit(Double money){
-        balance += money;
+        setBalance(getBalance() + money);
     }
 
     public synchronized void withdraw(Double money) throws InsufficientFundsException {
 
         if (money <= balance) {
-            balance -= money;
+            setBalance(getBalance() - money);
         } else {
             throw new InsufficientFundsException(money);
         }
