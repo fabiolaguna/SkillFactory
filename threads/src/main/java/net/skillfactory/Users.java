@@ -19,16 +19,17 @@ public class Users implements Runnable {
     @Override
     public void run() {
 
-        System.out.println("Deposito: "+ deposit);
         bankAccount.deposit(deposit);   //O hacer un get de balance, modificarlo y hacer el set
-        System.out.println("Balance de cuenta: " + bankAccount.getBalance());
+        System.out.println("El thread " + Thread.currentThread().getName() + " ha depositado: " + deposit
+                + ". Balance de cuenta: " + bankAccount.getBalance() + "\n");
 
-        System.out.println("Retiro: "+ withdraw);
         try {
             bankAccount.withdraw(withdraw);
         } catch (InsufficientFundsException e) {
             e.printStackTrace();
         }
-        System.out.println("Balance de cuenta: " + bankAccount.getBalance());
+
+        System.out.println("El thread " + Thread.currentThread().getName() + " ha retirado: " + withdraw
+                + ". Balance de cuenta: " + bankAccount.getBalance() + "\n");
     }
 }
