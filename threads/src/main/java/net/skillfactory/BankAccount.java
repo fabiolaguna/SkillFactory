@@ -5,9 +5,9 @@ public class BankAccount {
     private String accountNumber;
     private Double balance;
 
-    public BankAccount(String accountNumber, Double balance) {
+    public BankAccount(String accountNumber){
         this.accountNumber = accountNumber;
-        this.balance = balance;
+        balance = 500000D;
     }
 
     public synchronized Double getBalance() {
@@ -26,17 +26,11 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public BankAccount(String accountNumber){
-        this.accountNumber = accountNumber;
-        balance = 500000D;
-    }
-
     public synchronized void deposit(Double money){
         setBalance(getBalance() + money);
     }
 
     public synchronized void withdraw(Double money) throws InsufficientFundsException {
-
         if (money <= balance) {
             setBalance(getBalance() - money);
         } else {
