@@ -1,5 +1,9 @@
 package net.skillfactory;
 
+import net.skillfactory.models.BankAccount;
+import net.skillfactory.models.BankManager;
+import net.skillfactory.models.Users;
+
 public class App {
 
     public static void main( String[] args ) {

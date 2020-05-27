@@ -1,4 +1,6 @@
-package net.skillfactory;
+package net.skillfactory.models;
+
+import net.skillfactory.models.BankAccount;
 
 public class BankManager implements Runnable {
 
@@ -15,7 +17,13 @@ public class BankManager implements Runnable {
     @Override
     public void run() {
 
-        System.out.println("El thread gerente " + Thread.currentThread().getName()
-                + " obtiene el balance de cuenta. Balance = " + account.getBalance() + "\n");
+        boolean keepRunning = true;
+        while (keepRunning) {
+            try {
+                keepRunning = account.balanceAccounting();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
