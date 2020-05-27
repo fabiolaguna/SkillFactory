@@ -6,6 +6,7 @@ import net.skillfactory.models.BankManager;
 import net.skillfactory.models.Users;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
@@ -19,7 +20,7 @@ public class App {
 
     public static void main( String[] args ) {
 
-        /*BankAccount account = new BankAccount("12345");
+        BankAccount account = new BankAccount("12345");
 
         Thread t1 = new Thread(new Users("Fabio", "Laguna", account, 10000D, 125000D));
         Thread t2 = new Thread(new Users("Carlitos", "Tevez", account, 12000D, 200000D));
@@ -27,11 +28,11 @@ public class App {
 
         t1.start();
         t2.start();
-        manager.start();*/
+        manager.start();
 
         // Ejercicio 6
 
-        /*ExecutorService executor = Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
         Runnable boca = () -> System.out.println("Runnable boca: Boca yo te amo, siempre te sigo a todos lados");
         Runnable river = () -> System.out.println("Runnable river: BBBB");
@@ -84,7 +85,7 @@ public class App {
             executor.awaitTermination(7L, TimeUnit.SECONDS); //Esperar las tareas incompletas
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
 
         // Ejercicio 7
 
@@ -97,7 +98,7 @@ public class App {
         CompletableFuture<Double> completableDouble2 = CompletableFuture.supplyAsync(() -> Math.random() * 20, executor2);
 
         // Combining two CompletableFuture
-        CompletableFuture<Double> addition = completableDouble1
+        CompletableFuture<Double> additionResult = completableDouble1
                 .thenCombine(completableDouble2, (number1, number2) -> number1 + number2)
                 .thenApply(result -> { if (result > 30){
                                          throw new TooHighNumberException();
@@ -112,7 +113,7 @@ public class App {
                 });
 
         try {
-            System.out.println(String.format("%.1f + %.1f = %.1f", completableDouble1.get(), completableDouble2.get(), addition.get()));
+            System.out.println(String.format("%.1f + %.1f = %.1f", completableDouble1.get(), completableDouble2.get(), additionResult.get()));
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -125,6 +126,18 @@ public class App {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        // Ejercicio 8
+
+        List<String> stringsList;
+        stringsList = StringManagement.removeEvenLength(Arrays.asList("Hola", "Chau", "Que", "So", "Nos", "Vemos", "Fabio"));
+        stringsList.stream().forEach(string -> System.out.println(string));
+
+        StringManagement.printCharactersCount("Soy Independiente, aunque no gano la libertadores desde 1985, sigo siendo el máximo campeón con 7 copas");
+
+        System.out.println(StringManagement.cesarEncryption("zfgZBnV"));
+
+        System.out.println(StringManagement.reorderWords("Arriba la Birra"));
 
     }
 }
