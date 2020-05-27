@@ -1,5 +1,6 @@
 package net.skillfactory;
 
+import net.skillfactory.exceptions.TooHighNumberException;
 import net.skillfactory.models.BankAccount;
 import net.skillfactory.models.BankManager;
 import net.skillfactory.models.Users;
@@ -7,6 +8,7 @@ import net.skillfactory.models.Users;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,7 +31,7 @@ public class App {
 
         // Ejercicio 6
 
-        ExecutorService executor = Executors.newFixedThreadPool(2);
+        /*ExecutorService executor = Executors.newFixedThreadPool(2);
 
         Runnable boca = () -> System.out.println("Runnable boca: Boca yo te amo, siempre te sigo a todos lados");
         Runnable river = () -> System.out.println("Runnable river: BBBB");
@@ -82,6 +84,47 @@ public class App {
             executor.awaitTermination(7L, TimeUnit.SECONDS); //Esperar las tareas incompletas
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }*/
+
+        // Ejercicio 7
+
+        // I create a Thread Pool but CompletableFuture gives one by default
+        ExecutorService executor2 = Executors.newFixedThreadPool(2);
+
+        CompletableFuture.runAsync(() -> System.out.println("I'm a useless CompletableFuture, only i'm printing this"), executor2);
+
+        CompletableFuture<Double> completableDouble1 = CompletableFuture.supplyAsync(() -> Math.random() * 20, executor2);
+        CompletableFuture<Double> completableDouble2 = CompletableFuture.supplyAsync(() -> Math.random() * 20, executor2);
+
+        // Combining two CompletableFuture
+        CompletableFuture<Double> addition = completableDouble1
+                .thenCombine(completableDouble2, (number1, number2) -> number1 + number2)
+                .thenApply(result -> { if (result > 30){
+                                         throw new TooHighNumberException();
+                                     }
+                                     return result;
+                })
+                .handle((result, exception) -> { if (exception != null){   // Exception handling
+                                                    System.out.println("An exception has occurred because the result is higher than 30. Returned 0");
+                                                 }
+                                                 result = 0D;
+                                                 return result;
+                });
+
+        try {
+            System.out.println(String.format("%.1f + %.1f = %.1f", completableDouble1.get(), completableDouble2.get(), addition.get()));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
+
+        executor2.shutdown();
+        try {
+            executor2.awaitTermination(4L, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 }
