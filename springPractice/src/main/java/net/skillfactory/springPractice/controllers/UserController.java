@@ -1,6 +1,8 @@
 package net.skillfactory.springPractice.controllers;
 
+import net.skillfactory.springPractice.dtos.UserDto;
 import net.skillfactory.springPractice.models.User;
+import net.skillfactory.springPractice.projections.UserProjection;
 import net.skillfactory.springPractice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,17 +26,17 @@ public class UserController {
     }
 
     @PostMapping("")
-    public void add(@RequestBody User user){
-        userService.add(user);
+    public void add(@RequestBody UserDto userDto){
+        userService.add(userDto);
     }
 
     @GetMapping("")
-    public List<User> getAll(){
+    public List<UserProjection> getAll(){
         return userService.getAll();
     }
 
     @GetMapping("/{dni}")
-    public User getByDni(@PathVariable(value = "dni") String dni){
+    public UserProjection getByDni(@PathVariable(value = "dni") String dni){
         return userService.getByDni(dni);
     }
 }

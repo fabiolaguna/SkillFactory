@@ -42,6 +42,5 @@ public class User {
     private Integer age;
 
     @Column(name = "country_code")
-    @Value("${user.countrycode}")
     private String countryCode;
 }
