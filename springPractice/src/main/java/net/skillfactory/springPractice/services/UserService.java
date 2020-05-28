@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -24,16 +23,21 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void add(UserDto userDto) {
+    public User add(UserDto userDto) {
 
-        User user = new User();
-        user.setName(userDto.getName());
-        user.setLastName(userDto.getLastName());
-        user.setDni(userDto.getDni());
-        user.setAge(userDto.getAge());
-        user.setCountryCode(countryCode);
+        User returnedUser = null;
+        if (userRepository.existsByDni(userDto.getDni()) == null) {
+            User user = new User();
+            user.setName(userDto.getName());
+            user.setLastName(userDto.getLastName());
+            user.setDni(userDto.getDni());
+            user.setAge(userDto.getAge());
+            user.setCountryCode(countryCode);
 
-        userRepository.save(user);
+            returnedUser = userRepository.save(user);
+        }
+
+        return returnedUser;
     }
 
     public List<UserProjection> getAll() {
@@ -41,10 +45,6 @@ public class UserService {
     }
 
     public UserProjection getByDni(String dni) {
-
-        return Optional.ofNullable(userRepository.findByDni(dni))
-                .get()
-                .orElseThrow(RuntimeException::new);
-
+        return userRepository.findByDni(dni).orElse(null);
     }
 }
