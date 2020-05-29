@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ValidationHandler {
+public class ControllerAdvice {
 
     @ExceptionHandler(value = DuplicatedDniException.class)
     public ResponseEntity<ErrorResponseDto> duplicatedDniHandling(DuplicatedDniException ex){
@@ -30,4 +30,6 @@ public class ValidationHandler {
                         .errorCode(2)
                         .build());
     }
+
+    //todo Handling of validation exceptions
 }
