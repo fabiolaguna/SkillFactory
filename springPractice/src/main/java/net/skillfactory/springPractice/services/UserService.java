@@ -1,6 +1,8 @@
 package net.skillfactory.springPractice.services;
 
 import net.skillfactory.springPractice.dtos.UserDto;
+import net.skillfactory.springPractice.exceptions.DuplicatedDniException;
+import net.skillfactory.springPractice.exceptions.UserNotExistException;
 import net.skillfactory.springPractice.models.User;
 import net.skillfactory.springPractice.projections.UserProjection;
 import net.skillfactory.springPractice.repositories.UserRepository;
@@ -23,9 +25,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User add(UserDto userDto) {
+    public void add(UserDto userDto) {
 
-        User returnedUser = null;
         if (userRepository.existsByDni(userDto.getDni()) == null) {
             User user = new User();
             user.setName(userDto.getName());
@@ -34,10 +35,11 @@ public class UserService {
             user.setAge(userDto.getAge());
             user.setCountryCode(countryCode);
 
-            returnedUser = userRepository.save(user);
+            userRepository.save(user);
+        } else {
+            throw new DuplicatedDniException(String.format("The user couldn't be added, DNI: %s already exists", userDto.getDni()));
         }
 
-        return returnedUser;
     }
 
     public List<UserProjection> getAll() {
@@ -45,6 +47,7 @@ public class UserService {
     }
 
     public UserProjection getByDni(String dni) {
-        return userRepository.findByDni(dni).orElse(null);
+        return userRepository.findByDni(dni)
+                .orElseThrow(() -> new UserNotExistException(String.format("The user with DNI: %s doesn't exists", dni)));
     }
 }

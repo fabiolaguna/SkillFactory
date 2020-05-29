@@ -29,12 +29,8 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<?> add(@RequestBody UserDto userDto){
-
-        if (userService.add(userDto) != null){
-            return ResponseEntity.created(URI.create("localhost:8081")).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+        userService.add(userDto);
+        return ResponseEntity.created(URI.create("localhost:8081")).body("Added successfully");
     }
 
     @GetMapping("")
@@ -46,12 +42,8 @@ public class UserController {
 
     @GetMapping("/{dni}")
     public ResponseEntity<UserProjection> getByDni(@PathVariable(value = "dni") String dni){
-
-        UserProjection user = userService.getByDni(dni);
-        if (user != null) {
-            return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        return ResponseEntity.ok(userService.getByDni(dni));
     }
+
+    //todo Put and Patch updates
 }
