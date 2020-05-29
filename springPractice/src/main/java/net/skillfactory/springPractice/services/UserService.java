@@ -1,5 +1,6 @@
 package net.skillfactory.springPractice.services;
 
+import net.skillfactory.springPractice.configurations.Config;
 import net.skillfactory.springPractice.dtos.UserDto;
 import net.skillfactory.springPractice.exceptions.DuplicatedDniException;
 import net.skillfactory.springPractice.exceptions.UserNotExistException;
@@ -17,22 +18,25 @@ public class UserService {
 
     private UserRepository userRepository;
 
+    private Config configuration;
+
     @Value("${user.countrycode}")
     private String countryCode;
 
     @Autowired
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository, Config configuration){
         this.userRepository = userRepository;
+        this.configuration = configuration;
     }
 
     public void add(UserDto userDto) {
 
         if (userRepository.existsByDni(userDto.getDni()) == null) {
-            User user = new User();
+            User user = configuration.getNewUser();
             user.setName(userDto.getName());
             user.setLastName(userDto.getLastName());
-            user.setDni(userDto.getDni());
             user.setAge(userDto.getAge());
+            user.setDni(userDto.getDni());
             user.setCountryCode(countryCode);
 
             userRepository.save(user);
@@ -50,4 +54,5 @@ public class UserService {
         return userRepository.findByDni(dni)
                 .orElseThrow(() -> new UserNotExistException(String.format("The user with DNI: %s doesn't exists", dni)));
     }
+
 }
