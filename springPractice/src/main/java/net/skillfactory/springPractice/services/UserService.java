@@ -81,4 +81,12 @@ public class UserService {
 
         return UserDto.builder().name(newUser.getName()).lastName(newUser.getLastName()).age(newUser.getAge()).dni(newUser.getDni()).countryCode(newUser.getCountryCode()).build();
     }
+
+    public void delete(String dni) {
+
+        Integer idUser = userRepository.getIdByDni(dni)
+                .orElseThrow(() -> new UserNotExistException(String.format("The user with DNI: %s doesn't exists", dni)));
+
+        userRepository.deleteById(idUser);
+    }
 }

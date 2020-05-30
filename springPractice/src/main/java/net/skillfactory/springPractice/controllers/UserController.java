@@ -7,6 +7,7 @@ import net.skillfactory.springPractice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> add(@RequestBody @Valid User user){
+    public ResponseEntity<String> add(@RequestBody @Valid User user){
         userService.add(user);
         return ResponseEntity.created(URI.create("localhost:8081")).body("Added successfully");
     }
@@ -59,5 +60,11 @@ public class UserController {
     @PatchMapping("/{dni}")
     public ResponseEntity<UserDto> partialUpdate(@RequestBody @Valid UserDto userDto, @PathVariable(value = "dni") String dni){
         return ResponseEntity.ok(userService.partialUpdate(userDto, dni));
+    }
+
+    @DeleteMapping("/{dni}")
+    public ResponseEntity<String> delete(@PathVariable(value = "dni") String dni){
+        userService.delete(dni);
+        return ResponseEntity.ok("Deleted successfully");
     }
 }
