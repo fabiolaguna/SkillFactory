@@ -1,14 +1,17 @@
 package net.skillfactory.springPractice.configurations;
 
-import net.skillfactory.springPractice.models.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Config {
 
+    @Value("${user.countrycode}")
+    private String countryCode;
+
     @Bean
-    public User getNewUser() {
-        return new User();
+    public String getCountryCode() {
+        return countryCode;
     }
 }
