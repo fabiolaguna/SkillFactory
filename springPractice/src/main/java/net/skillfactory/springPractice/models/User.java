@@ -2,6 +2,7 @@ package net.skillfactory.springPractice.models;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +23,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class User {
 
     @Id
@@ -53,6 +55,9 @@ public class User {
     @Column(name = "age")
     private Integer age;
 
-    @Column(name = "country_code") // I don't validate this because the environment variable will set it
+    @NotNull // Added for put request
+    @Pattern(regexp = "[0-9-]+", message = "Country code should be made up of numbers") // Added for put and patch request
+    @Size(min = 1, max = 7, message = "Invalid size for country code") // Added for put and patch request
+    @Column(name = "country_code")
     private String countryCode;
 }

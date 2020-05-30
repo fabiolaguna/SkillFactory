@@ -17,6 +17,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query(value = "select u.name, u.last_name lastName, u.dni, u.age, u.country_code countryCode from users u ;", nativeQuery = true)
     List<UserProjection> findAllUsers();
 
-    @Query(value = "select * from users u where u.dni = ?1 ;", nativeQuery = true)
-    User existsByDni(String dni);
+    @Query(value = "select u.id_user from users u where u.dni = ?1 ;", nativeQuery = true)
+    Optional<Integer> getIdByDni(String dni);
 }
