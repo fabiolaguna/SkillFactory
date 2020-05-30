@@ -8,11 +8,11 @@ import net.skillfactory.springPractice.models.User;
 import net.skillfactory.springPractice.projections.UserProjection;
 import net.skillfactory.springPractice.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class UserService {
@@ -20,9 +20,6 @@ public class UserService {
     private UserRepository userRepository;
 
     private Config configuration;
-
-    @Value("${user.countrycode}")
-    private String countryCode;
 
     @Autowired
     public UserService(UserRepository userRepository, Config configuration){
@@ -33,7 +30,7 @@ public class UserService {
     public void add(User user) {
 
         if (!userRepository.findByDni(user.getDni()).isPresent()) {
-            user.setCountryCode(countryCode);
+            user.setCountryCode(configuration.getCountryCode());
             userRepository.save(user);
         } else {
             throw new DuplicatedDniException(String.format("The user couldn't be added, DNI: %s already exists", user.getDni()));
@@ -51,28 +48,28 @@ public class UserService {
 
     public void update(User user, String dni) {
 
-        if((userRepository.findByDni(user.getDni()).isPresent())){ //todo fijarse como hacer para que no se compare a el mismo
-            throw new DuplicatedDniException(String.format("The user can't be updated, new DNI: %s already exists", user.getDni()));
-        }
-
         Integer idUser = userRepository.getIdByDni(dni)
                 .orElseThrow(() -> new UserNotExistException(String.format("The user with DNI: %s doesn't exists", dni)));
+
+        if((userRepository.findByDni(user.getDni()).isPresent()) && (!user.getDni().equals(dni))){
+            throw new DuplicatedDniException(String.format("The user can't be updated, new DNI: %s already exists", user.getDni()));
+        }
 
         user.setId(idUser);
         userRepository.save(user);
     }
 
 
-    public void partialUpdate(UserDto userDto, String dni) {
-
-        if(userRepository.findByDni(userDto.getDni()).isPresent()){
-            throw new DuplicatedDniException(String.format("The user can't be updated, new DNI: %s already exists", userDto.getDni()));
-        }
+    public UserDto partialUpdate(UserDto userDto, String dni) {
 
         Integer idUser = userRepository.getIdByDni(dni)
                 .orElseThrow(() -> new UserNotExistException(String.format("The user with DNI: %s doesn't exists", dni)));
 
-        User newUser = configuration.getNewUser();
+        if(userRepository.findByDni(userDto.getDni()).isPresent() && (!userDto.getDni().equals(dni))){
+            throw new DuplicatedDniException(String.format("The user can't be updated, new DNI: %s already exists", userDto.getDni()));
+        }
+
+        User newUser = userRepository.getByDni(dni).get();
         Optional.ofNullable(userDto.getName()).ifPresent(newUser::setName);
         Optional.ofNullable(userDto.getLastName()).ifPresent(newUser::setLastName);
         Optional.ofNullable(userDto.getDni()).ifPresent(newUser::setDni);
@@ -81,5 +78,7 @@ public class UserService {
 
         newUser.setId(idUser);
         userRepository.save(newUser);
+
+        return UserDto.builder().name(newUser.getName()).lastName(newUser.getLastName()).age(newUser.getAge()).dni(newUser.getDni()).countryCode(newUser.getCountryCode()).build();
     }
 }

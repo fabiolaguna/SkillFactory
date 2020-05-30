@@ -1,5 +1,6 @@
 package net.skillfactory.springPractice.repositories;
 
+import net.skillfactory.springPractice.dtos.UserDto;
 import net.skillfactory.springPractice.models.User;
 import net.skillfactory.springPractice.projections.UserProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +14,8 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Integer> {
 
     Optional<UserProjection> findByDni(String dni);
+
+    Optional<User> getByDni(String dni);
 
     @Query(value = "select u.name, u.last_name lastName, u.dni, u.age, u.country_code countryCode from users u ;", nativeQuery = true)
     List<UserProjection> findAllUsers();

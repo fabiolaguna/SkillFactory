@@ -58,7 +58,6 @@ public class UserController {
 
     @PatchMapping("/{dni}")
     public ResponseEntity<UserDto> partialUpdate(@RequestBody @Valid UserDto userDto, @PathVariable(value = "dni") String dni){
-        userService.partialUpdate(userDto, dni);
-        return ResponseEntity.ok(userDto);
+        return ResponseEntity.ok(userService.partialUpdate(userDto, dni));
     }
 }
