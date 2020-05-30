@@ -1,6 +1,5 @@
 package net.skillfactory.springPractice.repositories;
 
-import net.skillfactory.springPractice.dtos.UserDto;
 import net.skillfactory.springPractice.models.User;
 import net.skillfactory.springPractice.projections.UserProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
